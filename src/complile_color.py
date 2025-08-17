@@ -112,6 +112,13 @@ if __name__ == "__main__":
     # first check if build folder exists
     if not os.path.exists(args.output_path):
         os.makedirs(args.output_path)
+    else:
+        print("Output directory already exists")
+        # if directory exists then delete the contents
+        for filename in os.listdir(args.output_path):
+            file_path = os.path.join(args.output_path, filename)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
 
     try:
         json_data = load_json(args.json_path)
@@ -129,9 +136,9 @@ if __name__ == "__main__":
         print("Generated code")
 
         # save out the code
-        with open(os.path.join(args.output_path, "colors.cs"), "w") as f:
+        with open(os.path.join(args.output_path, "ColorPalette.cs"), "w") as f:
             f.write(code["c_sharp"])
-        with open(os.path.join(args.output_path, "colors.css"), "w") as f:
+        with open(os.path.join(args.output_path, "ColorPalette.css"), "w") as f:
             f.write(code["css"])
         print("Saved code")
 
